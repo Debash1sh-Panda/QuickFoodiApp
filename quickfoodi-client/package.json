@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
   "dev": "vite",
-  "vite": "vite build",
+  "build": "vite build",
   "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-  "preview": "vite preview"
+  "preview": "vite preview",
+  "postinstall": "npm install"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.51.11",
