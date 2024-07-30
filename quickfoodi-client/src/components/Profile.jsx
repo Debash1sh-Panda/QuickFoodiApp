@@ -9,24 +9,25 @@ function Profile({ user }) {
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
   const [isAdmin, setIsAdmin] = useState(false);
-  // console.log(user)
 
   useEffect(() => {
-    // Retrieve the token from local storage`
-    const token = localStorage.getItem("token");
-    if (token) {
-      // Parse the token (assuming it's a JSON Web Token)
-      try {
-        const parsedToken = JSON.parse(atob(token.split(".")[1]));
-        const role = parsedToken.role;
-        if (role === "admin") {
-          setIsAdmin(true);
+    fetch(`http://localhost:3001/api/admin/${user.email}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          const role = data.data.role;
+          // console.log(role);
+          setIsAdmin(role === "admin");
         }
-      } catch (error) {
-        console.error("Error parsing token:", error);
-      }
-    }
-  }, []);
+        //  else {
+        //   toast.error(data.message);
+        // }
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+        toast.error("Error fetching user data");
+      });
+  }, [user]);
 
   const handleLogout = () => {
     logout()
@@ -38,7 +39,6 @@ function Profile({ user }) {
         toast.error(error.message);
       });
   };
-
 
   return (
     <div>

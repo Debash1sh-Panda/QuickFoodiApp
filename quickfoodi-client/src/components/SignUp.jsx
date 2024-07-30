@@ -20,20 +20,44 @@ function SignUp() {
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
 
-  const onSubmit = (data) => {
+  const handleFormSubmit  = (data) => {
+    onSubmit(data);
+    signupuser(data);
+  }
+
+  const signupuser = async (data) => {
+    try {
+      const response = await fetch("http://localhost:3001/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      // const responseData = await response.json();
+      // if (response.ok) {
+      //   toast.success("User data saved to MongoDB");
+      // } else {
+      //   toast.error(responseData.message);
+      // }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
+  const onSubmit = async (data) => {
     const email = data.email;
     const password = data.password;
 
-      createUsers(email, password)
+     await createUsers(email, password)
         .then((result) => {
-          const user = result.user;
           toast.success("Signup successfully");
           navigate(from, {replace: true})
         })
         .catch((error) => {
-          const errorCode = error.code;
           toast.error(error.message);
-          setErrorMessage("all fields required")
+          setErrorMessage("all fields required");
         });
   };
 
@@ -49,7 +73,7 @@ function SignUp() {
         <form
           className="card-body"
           method="dialog"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(handleFormSubmit)}
         >
           <h1 className="font-bold text-lg text-center">
             Create An <span className="text-[#6ae93d]">Account!</span>
@@ -63,7 +87,7 @@ function SignUp() {
               placeholder="full-name"
               className="input input-bordered"
               required
-              {...register("text")}
+              {...register("name")}
             />
           </div>
           <div className="form-control">

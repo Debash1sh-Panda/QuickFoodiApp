@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaTrashAlt, FaUser } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 function Users() {
   const { refetch, data: users = [] } = useQuery({
@@ -10,7 +11,58 @@ function Users() {
       return res.json();
     },
   });
-  // console.log(users)
+
+  const handleMakeAdmin = (user) => {
+    fetch(`http://localhost:3001/api/admin/${user._id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ role: 'admin' })  // Explicitly set the role in the request body
+    })
+    .then(async response => {
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message);
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.success) {
+        toast.success(`${user.name} promoted to admin`);
+        refetch();
+      } else {
+        toast.error(data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error promoting user to admin:', error);
+      toast.error('Error promoting user to admin');
+    });
+  }
+
+  const handleDelete = async (user) => {
+    try{
+    const response = await fetch(`http://localhost:3001/api/user/${user._id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await response.json();
+      if (data.success) {
+        toast.success(`${user.name} deleted successfully`);
+        refetch();
+      } else {
+        toast.error(data.message);
+      }
+    }catch (error) {
+      console.error('Error deleting user:', error);
+      toast.error('Error deleting user');
+    }
+  }
+
   return (
     <div className="mt-4">
       <div className="mb-5 flex flex-col items-center justify-center">
@@ -39,10 +91,12 @@ function Users() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.role === 'admin' ? <FaUser className="mx-2 text-[#278888]" title="Admin"/>:(
-                    <button className="btn btn-ghost btn-xs hover:text-[#278888] hover:bg-black" title="mark as Admin"><FaUser/></button>
+                    <button className="btn btn-ghost btn-xs hover:text-[#278888] hover:bg-black" title="mark as Admin"
+                    onClick={() => handleMakeAdmin(user)}><FaUser/></button>
                   )}</td>
                   <td>
-                    <button className="btn btn-ghost btn-xs text-red-800 hover:text-black hover:bg-slate-500">
+                    <button className="btn btn-ghost btn-xs text-red-800 hover:text-black hover:bg-slate-500"
+                    onClick={() => handleDelete(user)}>
                       <FaTrashAlt />
                     </button>
                   </td>
