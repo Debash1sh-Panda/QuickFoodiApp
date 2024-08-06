@@ -92,12 +92,12 @@ function Dashboard() {
               </Link>
             </li>
             <li>
-              <Link to="/dashboard">
+              <Link to="/dashboard/add-menu">
                 <FaPlusCircle /> Add Menu
               </Link>
             </li>
             <li>
-              <Link to="/dashboard">
+              <Link to="/dashboard/manage-item">
                 <FaEdit /> Manage Items
               </Link>
             </li>
