@@ -44,7 +44,8 @@
     "postcss": "^8.4.39",
     "vite": "^5.3.5"
   },
-  "engines": {
-    "node": "20.11.1"
-  }
+    "engines": {
+      "node": "20.x"
+    }
+  
 }
