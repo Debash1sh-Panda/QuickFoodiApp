@@ -9,6 +9,15 @@ export default {
         "light-green" : "#9DCBBD",
         "orange" : "#F1B24A"
       },
+      keyframes: {
+        slideUpFadeIn: {
+          '0%': { opacity: 0, transform: 'translateY(20px)' },
+          '100%': { opacity: 1, transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        slideUpFadeIn: 'slideUpFadeIn 0.5s ease-out',
+      },
     },
   },
   plugins: [require("daisyui")],

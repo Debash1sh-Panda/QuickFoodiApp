@@ -89,7 +89,6 @@ router.get("/admin/:email", async (req, res) => {
   }
 });
 
-module.exports = router;
 
 //make admin of a user
 router.patch("/admin/:id", async (req, res) => {

@@ -16,7 +16,7 @@ function Main() {
       ) : (
         <div>
           <Navbar />
-          <div className="min-h-screen">
+          <div className="">
           <Outlet />
           </div>
           <Footer />

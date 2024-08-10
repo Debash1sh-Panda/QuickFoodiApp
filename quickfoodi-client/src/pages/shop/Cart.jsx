@@ -3,75 +3,73 @@ import useCart from "../../hooks/useCart";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const [cart, refetch] = useCart();
-  const { user } = useAuth()
+  const { user } = useAuth();
   const [cartItems, setCartItems] = useState([]);
-
 
   //total price for individual item
   const totalPrice = (item) => {
     return item.price * item.quantity;
-  }
+  };
 
   //total price for all item
   const calculateTotalAmount = cart.reduce((total, item) => {
     return total + totalPrice(item);
-  }, 0)
-
+  }, 0);
 
   //increase quantity
   const handleIncrease = (item) => {
-    fetch(`http://localhost:3001/api/cart/${item._id}`,{
+    fetch(`http://localhost:3001/api/cart/${item._id}`, {
       method: "PUT",
       headers: {
-        "content-type": "application/json; charset=UTF-8"
+        "content-type": "application/json; charset=UTF-8",
       },
-      body: JSON.stringify({quantity: item.quantity + 1})
+      body: JSON.stringify({ quantity: item.quantity + 1 }),
     })
-    .then( res => res.json())
-    .then( data => {
-      const updateCart = cartItems.map((cartItem) => {
-        if (cartItem._id === item._id) {
-          return {
-            ...cartItem,
-            quantity: cartItem.quantity + 1
+      .then((res) => res.json())
+      .then((data) => {
+        const updateCart = cartItems.map((cartItem) => {
+          if (cartItem._id === item._id) {
+            return {
+              ...cartItem,
+              quantity: cartItem.quantity + 1,
+            };
           }
-        }
-       return cartItem; 
-      })
-      
-      setCartItems(updateCart);
-      refetch();
-    })
-  };
+          return cartItem;
+        });
 
+        setCartItems(updateCart);
+        refetch();
+      });
+  };
 
   //decrease quantity
   const handleDecrease = (item) => {
-    fetch(`http://localhost:3001/api/cart/${item._id}`,{
+    fetch(`http://localhost:3001/api/cart/${item._id}`, {
       method: "PUT",
       headers: {
-        "content-type": "application/json; charset=UTF-8"
+        "content-type": "application/json; charset=UTF-8",
       },
-      body: JSON.stringify({ quantity: Math.max(item.quantity - 1, 1) })
+      body: JSON.stringify({ quantity: Math.max(item.quantity - 1, 1) }),
     })
-    .then( res => res.json())
-    .then( data => {
-      const updateCart = cartItems.map((cartItem) => {
-        if (cartItem._id === item._id) {
-          return {
-            ...cartItem,
-            quantity: Math.max(cartItem.quantity - 1, 1)
+      .then((res) => res.json())
+      .then((data) => {
+        const updateCart = cartItems.map((cartItem) => {
+          if (cartItem._id === item._id) {
+            return {
+              ...cartItem,
+              quantity: Math.max(cartItem.quantity - 1, 1),
+            };
           }
-        }
-       return cartItem; 
-      })
-      
-      setCartItems(updateCart);
-      refetch();
-    })
+          return cartItem;
+        });
+
+        setCartItems(updateCart);
+        refetch();
+      });
   };
 
   const handleDelete = (item) => {
@@ -103,7 +101,6 @@ function Cart() {
     });
   };
 
-  
   return (
     <div className="section-container bg-gradient-to-r from-[#164A41] from-0% via-[#4D774E] via-40% to-[#9DCBBD] to-100%">
       {/* text */}
@@ -220,11 +217,16 @@ function Cart() {
             <span className="text-black font-bold">{cart.length}</span>
           </p>
           <p className="text-black">
-            Total Price: <span className="text-[#102929] font-bold">₹{calculateTotalAmount.toFixed(2)}</span>
+            Total Price:{" "}
+            <span className="text-[#102929] font-bold">
+              ₹{calculateTotalAmount.toFixed(2)}
+            </span>
           </p>
-          <button className="btn bg-[#F1B24A] hover:bg-[#f0c684] hover:text-slate-800 rounded-full px-6 text-white flex items-center gap-2">
-            Proceed Checkout
-          </button>
+          <Link to='/process-checkout'>
+            <button className="btn bg-[#F1B24A] hover:bg-[#f0c684] hover:text-slate-800 rounded-full px-6 text-white flex items-center gap-2 mt-4 mb-5">
+              Proceed Checkout
+            </button>
+          </Link>
         </div>
       </div>
     </div>

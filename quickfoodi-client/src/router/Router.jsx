@@ -14,8 +14,11 @@ import Settings from "../pages/Dashboard/Settings";
 import AddMenu from "../pages/Dashboard/admin/AddMenu";
 import ManageItem from "../pages/Dashboard/admin/ManageItem";
 import UpdateMenu from "../pages/Dashboard/admin/UpdateMenu";
+import Payment from "../pages/shop/Payment";
 
 const router = createBrowserRouter([
+
+    // Users Route
     {
         path : "/",
         element : <Main/>,
@@ -44,12 +47,18 @@ const router = createBrowserRouter([
                 path : "/update-profile",
                 element : <PrivateRouter><UpdateProfile/></PrivateRouter>
             },
+            {
+                path : "/process-checkout",
+                element : <Payment/>
+            },
         ],
     },
     {
         path : "/signup",
         element: <SignUp/>
     },
+
+    // Admin routes
     {
         path: "/dashboard",
         element: <DashboardLayout/>,
