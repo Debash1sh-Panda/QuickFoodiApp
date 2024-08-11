@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import axios from "axios";
-import useAxios from "../hooks/useAxios";
+import useAxios from "../hooks/useAxios"
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
