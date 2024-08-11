@@ -8,6 +8,7 @@ import { baseUrl } from "../../urls";
 
 function Cart() {
   const [cart, refetch] = useCart();
+  console.log(cart)
   const { user } = useAuth();
   const [cartItems, setCartItems] = useState([]);
 
@@ -104,7 +105,7 @@ function Cart() {
 
   return (
     <div className="section-container bg-gradient-to-r from-[#164A41] from-0% via-[#4D774E] via-40% to-[#9DCBBD] to-100%">
-      {cart.length === 0 ? (
+      {cart.length == 0 ? (
         <div className="flex flex-col justify-center items-center py-32">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
             Your Cart is Empty

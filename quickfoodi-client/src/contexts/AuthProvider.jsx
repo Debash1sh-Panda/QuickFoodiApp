@@ -12,12 +12,13 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import axios from "axios";
-import useAxios from "../hooks/useAxios"
+import { baseUrl } from "../urls";
+
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-const axiosPublic = useAxios();
+
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -98,7 +99,7 @@ function AuthProvider({ children }) {
       setLoading(false);
       if (currentUser) {
         const userInfo = { email: currentUser.email };
-        axiosPublic.post("/api/jwt/verify-jwt", userInfo).then((res) => {
+        axios.post(`${baseUrl}/api/jwt/verify-jwt`, userInfo).then((res) => {
           // console.log(res)
           if (res.data.token) {
             localStorage.setItem("token", res.data.token);

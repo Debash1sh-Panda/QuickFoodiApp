@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
+import { baseUrl } from "../urls";
 
 function useCart() {
   const { user } = useAuth();
@@ -8,7 +9,7 @@ function useCart() {
   const { refetch, data: cart = [] } = useQuery({
     queryKey: ['carts', user?.email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3001/api/cart?email=${user?.email}`, {
+      const res = await fetch(`${baseUrl}/api/cart?email=${user?.email}`, {
         headers: {
           authorization: `Bearer ${token}`
         }
