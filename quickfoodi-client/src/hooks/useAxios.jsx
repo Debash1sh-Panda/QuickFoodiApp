@@ -1,10 +1,10 @@
-// import axios from "axios";
+import axios from "axios";
 
-// function useAxios() {
-//   const axiosPublic = axios.create({
-//     baseURL: "http://localhost:3001",
-//   });
-//   return axiosPublic;
-// }
+function useAxios() {
+  const axiosPublic = axios.create({
+    baseURL: "https://quickfoodiapp.onrender.com",
+  });
+  return axiosPublic;
+}
 
-// export default useAxios;
+export default useAxios;
