@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { FaUtensils } from "react-icons/fa";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { baseUrl } from "../../../urls";
 
 function UpdateMenu() {
   const item = useLoaderData();
@@ -42,8 +43,8 @@ function UpdateMenu() {
         };
 
         const postMenuItem = await axios.put(
-          `http://localhost:3001/api/update-menu/${item.singleId._id}`,
-          itemData
+          `${baseUrl}/api/update-menu/${item.singleId._id}`,
+          itemData 
         );
 
         if (postMenuItem.status === 200) {

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { FaTruckLoading, FaUtensils } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { baseUrl } from "../../../urls";
 
 function AddMenu() {
   const [loading, setLoading] = useState(false); // Loading state
@@ -37,7 +38,7 @@ function AddMenu() {
         };
 
         const postMenuItem = await axios.post(
-          "http://localhost:3001/api/addmenu",
+          `${baseUrl}/api/addmenu`,
           itemData
         );
 

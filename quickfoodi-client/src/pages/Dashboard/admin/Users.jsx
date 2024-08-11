@@ -2,18 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaTrashAlt, FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { baseUrl } from "../../../urls";
 
 function Users() {
   const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3001/api/user`);
-      return res.json();
+      const res = await fetch(`${baseUrl}/api/user`);
+      return res.json(); 
     },
   });
 
   const handleMakeAdmin = (user) => {
-    fetch(`http://localhost:3001/api/admin/${user._id}`, {
+    fetch(`${baseUrl}/api/admin/${user._id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +44,7 @@ function Users() {
 
   const handleDelete = async (user) => {
     try{
-    const response = await fetch(`http://localhost:3001/api/user/${user._id}`, {
+    const response = await fetch(`${baseUrl}/api/user/${user._id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

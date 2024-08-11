@@ -1,6 +1,7 @@
 import React from "react";
 import useAuth from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import { baseUrl } from "../../urls";
 
 function Orders() {
   const { user } = useAuth();
@@ -10,7 +11,7 @@ function Orders() {
     queryKey: ["orders", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:3001/api/payments?email=${user.email}`,
+        `${baseUrl}/api/payments?email=${user.email}`,
         {
           method: "GET",
           headers: {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cards from "../../components/Cards";
 import { FaFilter } from "react-icons/fa";
+import { baseUrl } from "../../urls";
 
 function Menu() {
   const [menu, setMenu] = useState([]);
@@ -15,7 +16,7 @@ function Menu() {
     //fetch data from the backend
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/menu");
+        const response = await fetch(`${baseUrl}/api/menu`);
         const data = await response.json();
         // console.log(data);
 

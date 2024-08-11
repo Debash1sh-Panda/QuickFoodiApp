@@ -4,6 +4,7 @@ import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../../urls";
 
 function Cart() {
   const [cart, refetch] = useCart();
@@ -22,7 +23,7 @@ function Cart() {
 
   //increase quantity
   const handleIncrease = (item) => {
-    fetch(`http://localhost:3001/api/cart/${item._id}`, {
+    fetch(`${baseUrl}/api/cart/${item._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json; charset=UTF-8",
@@ -48,7 +49,7 @@ function Cart() {
 
   //decrease quantity
   const handleDecrease = (item) => {
-    fetch(`http://localhost:3001/api/cart/${item._id}`, {
+    fetch(`${baseUrl}/api/cart/${item._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json; charset=UTF-8",
@@ -83,7 +84,7 @@ function Cart() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3001/api/cart/${item._id}`, {
+        fetch(`${baseUrl}/api/cart/${item._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

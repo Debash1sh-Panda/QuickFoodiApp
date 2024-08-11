@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Login from "../components/Login";
 import { AuthContext } from "../contexts/AuthProvider";
 import { toast } from 'react-toastify';
+import { baseUrl } from "../urls";
 
 function SignUp() {
   const {
@@ -27,7 +28,7 @@ function SignUp() {
 
   const signupuser = async (data) => {
     try {
-      const response = await fetch("http://localhost:3001/api/user", {
+      const response = await fetch(`${baseUrl}/api/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

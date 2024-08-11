@@ -4,6 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { AuthContext } from "../contexts/AuthProvider";
 import Swal from "sweetalert2";
 import useCart from "../hooks/useCart";
+import { baseUrl } from "../urls";
 
 function Cards({ item }) {
   const { name, image, price, _id } = item;
@@ -31,7 +32,7 @@ function Cards({ item }) {
         email: user.email,
       };
       // console.log(cartItem)
-      fetch("http://localhost:3001/api/cart", {
+      fetch(`${baseUrl}/api/cart`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

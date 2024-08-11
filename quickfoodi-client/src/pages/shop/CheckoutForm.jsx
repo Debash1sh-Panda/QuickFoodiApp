@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../../urls";
 
 function CheckoutForm({ price, cart }) {
   const { user } = useAuth();
@@ -20,7 +21,7 @@ function CheckoutForm({ price, cart }) {
     //   return;
     // }
     axios
-      .post("http://localhost:3001/api/create-payment-intent", { price })
+      .post(`${baseUrl}/api/create-payment-intent`, { price })
       .then((res) => {
         setClientSecret(res.data.clientSecret);
       });
@@ -76,7 +77,7 @@ function CheckoutForm({ price, cart }) {
           menuItems: cart.map(item => item.menuItemId),
         }
 
-        axios.post("http://localhost:3001/api/payments", paymentInfo)
+        axios.post(`${baseUrl}/api/payments`, paymentInfo)
         .then(res => {
           console.log(res.data)
           toast.success("Payment Successfull :)");

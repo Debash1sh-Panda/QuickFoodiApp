@@ -4,6 +4,7 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { baseUrl } from "../../../urls";
 
 function ManageItem() {
   const [menu, refetch] = useMenu();
@@ -11,7 +12,7 @@ function ManageItem() {
   const handleDelete = async (item) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/api/deleteitem/${item._id}`
+        `${baseUrl}/api/deleteitem/${item._id}`
       );
       if (response.status === 200) {
         toast.success("Item Deleted Successfully");

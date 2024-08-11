@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { baseUrl } from "../urls";
 
 function Profile({ user }) {
   const { logout } = useContext(AuthContext);
@@ -11,7 +12,7 @@ function Profile({ user }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/admin/${user.email}`)
+    fetch(`${baseUrl}/api/admin/${user.email}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
