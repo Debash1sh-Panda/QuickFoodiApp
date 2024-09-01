@@ -18,9 +18,9 @@ function Cart() {
   };
 
   //total price for all item
-  const calculateTotalAmount = (cart || []).reduce((total, item) => {
-    return total + totalPrice(item);
-  }, 0);
+  const calculateTotalAmount = Array.isArray(cart)
+    ? cart.reduce((total, item) => total + totalPrice(item), 0)
+    : 0;
 
   //increase quantity
   const handleIncrease = (item) => {
