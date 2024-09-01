@@ -20,8 +20,7 @@ function CheckoutForm({ price, cart }) {
     //   toast.error("Price is not a number pr less than 1");
     //   return;
     // }
-    axios
-      .post(`${baseUrl}/api/create-payment-intent`, { price })
+    axios.post(`${baseUrl}/create-payment-intent`, { price })
       .then((res) => {
         setClientSecret(res.data.clientSecret);
       });

@@ -8,7 +8,7 @@ import { baseUrl } from "../../urls";
 
 function Cart() {
   const [cart, refetch] = useCart();
-  console.log(cart)
+  // console.log(cart)
   const { user } = useAuth();
   const [cartItems, setCartItems] = useState([]);
 

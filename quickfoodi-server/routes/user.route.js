@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/models.user");
-const admin = require('firebase-admin');
 
-admin.initializeApp({
-    credential: admin.credential.applicationDefault()
-  });
 
 // get all user
 router.get("/user", async (req, res) => {

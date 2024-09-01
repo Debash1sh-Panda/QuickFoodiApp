@@ -29,27 +29,33 @@ QFoodiApp.use("/api", cartRoute);
 const userRoute = require("./routes/user.route");
 QFoodiApp.use("/api", userRoute);
 
+//for store token
+const tokenRoute = require("./routes/token.route");
+QFoodiApp.use("/api", tokenRoute);
+
 //for payments
 const paymentRoute = require("./routes/payment.route");
-QFoodiApp.use("/api", paymentRoute);
+const verifyToken = require("./middleware/verifyToken.middleware");
+QFoodiApp.use("/api", verifyToken, paymentRoute);
 
 
 //Stripe api payment route
-QFoodiApp.post("/api/create-payment-intent", async (req, res) => {
+QFoodiApp.post('/create-payment-intent', async (req, res) => {
   const { price } = req.body;
-  const amount = price*100;
-
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: amount,
-    currency: "usd",
-
-    payment_method_types: ["card"],
-  });
-
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+  
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: price,
+      currency: 'usd',
+      payment_method_types: ['card'],
+    });
+console.log(paymentIntent)
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
 });
 
 //default route

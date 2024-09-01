@@ -14,11 +14,9 @@ import app from "../firebase/firebase.config";
 import axios from "axios";
 import { baseUrl } from "../urls";
 
-
 export const AuthContext = createContext();
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -97,18 +95,54 @@ function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+
       if (currentUser) {
         const userInfo = { email: currentUser.email };
-        axios.post(`${baseUrl}/api/jwt/verify-jwt`, userInfo).then((res) => {
-          // console.log(res)
-          if (res.data.token) {
-            localStorage.setItem("token", res.data.token);
-          }
-        });
+
+        axios
+          .post(`${baseUrl}/api/jwt/verify-jwt`, userInfo)
+          .then((res) => {
+            if (res.data.token) {
+              // Send the token to the backend for storage
+              // console.log(res.data.token)
+              axios
+                .post(`${baseUrl}/api/store-token`, {
+                  token: res.data.token,
+                  email: currentUser.email,
+                })
+                .then((response) => {
+                  console.log(
+                    "Token stored in the database successfully:",
+                    response.data
+                  );
+                })
+                .catch((error) => {
+                  console.error(
+                    "Error storing the token in the database:",
+                    error
+                  );
+                });
+            }
+          })
+          .catch((error) => {
+            console.error("Error verifying JWT:", error);
+          });
       } else {
-        localStorage.removeItem("token");
+        // Optionally notify the backend that the user has logged out, or handle token removal logic
+        axios
+          .post(`${baseUrl}/api/remove-token`, { email: currentUser?.email })
+          .then((response) => {
+            console.log(
+              "Token removed from the database successfully:",
+              response.data
+            );
+          })
+          .catch((error) => {
+            console.error("Error removing the token from the database:", error);
+          });
       }
     });
+
     return () => {
       unsubscribe();
     };

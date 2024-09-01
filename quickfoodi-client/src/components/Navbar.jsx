@@ -49,7 +49,7 @@ const Navbar = () => {
           </summary>
           <ul className="p-2">
             <li className={hoverEffect}>
-              <a href="/menu">All</a>
+              <Link to="/menu">All</Link>
             </li>
             <li className={hoverEffect}>
               <a>Salad</a>
