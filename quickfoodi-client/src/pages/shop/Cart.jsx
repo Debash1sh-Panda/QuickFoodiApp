@@ -144,7 +144,7 @@ function Cart() {
               </thead>
               <tbody>
                 {/* row 1 */}
-                {cart.map((item, index) => (
+                {Array.isArray(cart) && cart.map((item, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>
