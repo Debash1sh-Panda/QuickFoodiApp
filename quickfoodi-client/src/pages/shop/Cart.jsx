@@ -18,7 +18,7 @@ function Cart() {
   };
 
   //total price for all item
-  const calculateTotalAmount = cart.reduce((total, item) => {
+  const calculateTotalAmount = (cart || []).reduce((total, item) => {
     return total + totalPrice(item);
   }, 0);
 
@@ -180,7 +180,9 @@ function Cart() {
                         +
                       </button>
                     </td>
-                    <td className="text-black">₹{totalPrice(item).toFixed(2)}</td>
+                    <td className="text-black">
+                      ₹{totalPrice(item).toFixed(2)}
+                    </td>
                     <th>
                       <button
                         className="btn btn-ghost btn-xs text-black hover:text-red-800 hover:bg-slate-500"
@@ -237,7 +239,7 @@ function Cart() {
                   ₹{calculateTotalAmount.toFixed(2)}
                 </span>
               </p>
-              <Link to='/process-checkout'>
+              <Link to="/process-checkout">
                 <button className="btn bg-[#F1B24A] hover:bg-[#f0c684] hover:text-slate-800 rounded-full px-6 text-white flex items-center gap-2 mt-4 mb-5">
                   Proceed Checkout
                 </button>
